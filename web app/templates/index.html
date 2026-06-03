@@ -1,30 +1,62 @@
 <!DOCTYPE html>
-<html>
-  <head>
+<html lang="zh-CN">
+<head>
     <meta charset="UTF-8">
-    <title>🛸 UFO Appearance Prediction! 👽</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-  </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>🛸 UFO Sightings Predictor👽</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛸</text></svg>">
+</head>
 
-  <body>
+<body>
     <div class="grid">
-
-      <div class="box">
-
-        <p>According to the number of seconds, latitude and longitude, which country is likely to have reported seeing a UFO?</p>
-
-        <form action="{{ url_for('predict')}}" method="post">
-          <input type="number" name="seconds" placeholder="Seconds" required="required" min="0" max="60" />
-          <input type="text" name="latitude" placeholder="Latitude" required="required" />
-          <input type="text" name="longitude" placeholder="Longitude" required="required" />
-          <button type="submit" class="btn">Predict country where the UFO is seen</button>
-        </form>
-
-        <p>{{ prediction_text }}</p>
-
-      </div>
-
+        <div class="box">
+            <p>
+                🛸 UFO Sightings Prediction 🌍
+            </p>
+            <p style="font-size: 14px; margin-bottom: 20px; opacity: 0.8;">
+                👽 Based on duration, latitude & longitude
+            </p>
+            
+            <form action="{{ url_for('predict')}}" method="post">
+                <input type="number" 
+                       name="seconds" 
+                       placeholder="⏱️ Duration (seconds)" 
+                       required="required" 
+                       min="1" 
+                       max="60"
+                       step="1"
+                       title="Enter UFO sighting duration between 1-60 seconds">
+                
+                <input type="text" 
+                       name="latitude" 
+                       placeholder="📍 Latitude (e.g., 44.5)" 
+                       required="required"
+                       pattern="-?\d+(\.\d+)?"
+                       title="Enter valid latitude coordinate">
+                
+                <input type="text" 
+                       name="longitude" 
+                       placeholder="🌐 Longitude (e.g., -12.3)" 
+                       required="required"
+                       pattern="-?\d+(\.\d+)?"
+                       title="Enter valid longitude coordinate">
+                
+                <button type="submit" class="btn">
+                    🔍 Predict Country
+                </button>
+            </form>
+            
+            {% if prediction_text %}
+            <p>
+                {{ prediction_text }}
+            </p>
+            {% else %}
+            <p style="opacity: 0.6; font-size: 16px;">
+                👆 Enter data above to predict where the UFO was sighted
+            </p>
+            {% endif %}
+        </div>
     </div>
-
-  </body>
+</body>
 </html>
